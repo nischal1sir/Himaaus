@@ -43,12 +43,7 @@ import WhyChooseUs from "../pages/Home/whySection/whyChooseExplore/pages/WhyChoo
 import WhyLearnMore from "../pages/Home/whySection/whyChooseExplore/pages/WhylearnMore.tsx";
 
 // About Us pages
-// import CompanyProfilePage from "../VisaServices-DestinationCountry/company-profile.tsx";
-// import WhoAreWePage from "../Pages/who-are-we";
-// import DirectorMessagePage from "../Pages/director-message";
-// import PartnersPage from "../Pages/partners";
-// import AboutEventsPage from "../Pages/events";
-// import StoriesPage from "../Pages/stories";
+import CompanyProfilePage from "../pages/About/CompanyProfilePage.tsx";
 
 function EventDetailRoute({
   pageComponent: PageComponent,
@@ -190,28 +185,32 @@ const router = createBrowserRouter([
         path: "about",
         children: [
           {
+            index: true,
+            element: <CompanyProfilePage />,
+          },
+          {
             path: "company-profile",
-            element: "",
+            element: <CompanyProfilePage />,
           },
           {
             path: "company-profile/who-are-we",
-            element: "",
+            element: <CompanyProfilePage />,
           },
           {
             path: "director-message",
-            element: "",
+            element: <CompanyProfilePage />,
           },
           {
             path: "partners",
-            element: "",
+            element: <CompanyProfilePage />,
           },
           {
             path: "events",
-            element: "",
+            element: <CompanyProfilePage />,
           },
           {
             path: "stories",
-            element: "",
+            element: <CompanyProfilePage />,
           },
         ],
       },
