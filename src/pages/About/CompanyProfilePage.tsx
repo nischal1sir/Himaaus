@@ -1,8 +1,7 @@
 import React from "react";
 import MilestoneHeader from "./components/MilestoneHeader";
 import MilestoneTimeline from "./components/MilestoneTimeline";
-import ReadyToStartSection from "./components/ReadyToStartSection";
-import FloatingWidgets from "./components/FloatingWidgets";
+import CTASection from "../Home/whySection/whyChooseExplore/CTASection";
 
 export const CompanyProfilePage: React.FC = () => {
   return (
@@ -13,11 +12,8 @@ export const CompanyProfilePage: React.FC = () => {
       {/* 2. Interactive Milestone Timeline */}
       <MilestoneTimeline />
 
-      {/* 3. Ready To Get Started CTA Section */}
-      <ReadyToStartSection />
-
-      {/* 4. Head Office Banner & Floating Chat / Scroll Widgets */}
-      <FloatingWidgets />
+      {/* 3. Official Project Ready To Get Started CTA Section */}
+      <CTASection />
     </div>
   );
 };
