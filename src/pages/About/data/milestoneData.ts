@@ -22,7 +22,7 @@ export const milestoneData: Milestone[] = [
     id: "melbourne-2013",
     year: "2013",
     city: "Melbourne",
-    address: "World Trade Centre, 61 Flinders St, Tower 4 - Level 10,Melbourne, 3008 VIC",
+    address: "World Trade Centre, 61 Flinders St, Tower 4 - Level 10, Melbourne, 3008 VIC",
     phone: "+61 3 96002052",
     email: "melbourne@himaaus.com",
     side: "left",
