@@ -12,12 +12,12 @@ export const MilestoneHeader: React.FC = () => {
       </div>
 
       {/* Main Page Title */}
-      <h1 className="text-[#0084CA] font-extrabold text-3xl md:text-4xl lg:text-[40px] tracking-tight leading-tight mb-3">
+      <h2 className="text-[#0084CA] font-bold text-3xl md:text-4xl tracking-tight leading-tight mb-3">
         Milestones That Define Our Excellence
-      </h1>
+      </h2>
 
       {/* Subtitle Description */}
-      <p className="text-[#334155] text-sm md:text-[15px] max-w-5xl leading-relaxed font-normal">
+      <p className="text-[#475569] text-sm md:text-[15px] max-w-5xl leading-relaxed font-normal">
         From humble beginnings to industry leadership, trace our journey of growth, innovation, and commitment to transforming student lives worldwide.
       </p>
     </div>

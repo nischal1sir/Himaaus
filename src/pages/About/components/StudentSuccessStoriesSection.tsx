@@ -16,19 +16,29 @@ export const StudentSuccessStoriesSection: React.FC = () => {
           </div>
 
           {/* Title */}
-          <h2 className="text-[#0084CA] font-extrabold text-3xl md:text-4xl lg:text-[40px] tracking-tight leading-tight mb-4">
+          <h2 className="text-[#0084CA] font-bold text-3xl md:text-4xl tracking-tight leading-tight mb-4">
             Student Success Stories
           </h2>
 
           {/* Description Paragraph */}
-          <p className="text-[#334155] text-sm md:text-[15px] leading-relaxed font-normal">
+          <p className="text-[#475569] text-sm md:text-[15px] leading-relaxed font-normal mb-7">
             Over the years, we've helped thousands of students achieve their dreams of studying in Australia. Our comprehensive support system ensures that every student receives the guidance they need to succeed academically and personally in their new environment.
           </p>
+
+          {/* Learn More About Us Button */}
+          <div>
+            <button
+              type="button"
+              className="bg-[#0084CA] hover:bg-[#0073B2] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-102 cursor-pointer"
+            >
+              Learn More About Us
+            </button>
+          </div>
         </div>
 
         {/* Right Column: Image Card */}
         <div className="relative group order-1 lg:order-2">
-          <div className="rounded-[28px] md:rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-300">
+          <div className="rounded-[28px] md:rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.07)] border border-gray-100 transition-all duration-300">
             <img
               src={studentSuccessImg}
               alt="Student Success Stories - High five in office"

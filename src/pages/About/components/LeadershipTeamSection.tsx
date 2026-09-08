@@ -16,12 +16,12 @@ export const LeadershipTeamSection: React.FC = () => {
         </div>
 
         {/* Section Title */}
-        <h2 className="text-[#0084CA] font-extrabold text-3xl md:text-4xl lg:text-[40px] tracking-tight leading-tight mb-3">
+        <h2 className="text-[#0084CA] font-bold text-3xl md:text-4xl tracking-tight leading-tight mb-3">
           Meet Our Leadership & Team
         </h2>
 
         {/* Subtitle Description */}
-        <p className="text-[#334155] text-sm md:text-[15px] max-w-5xl leading-relaxed font-normal">
+        <p className="text-[#475569] text-sm md:text-[15px] max-w-5xl leading-relaxed font-normal">
           Our team combines years of industry experience with a passion for student success. Each member brings unique expertise to guide you through every step of your journey.
         </p>
       </div>
@@ -41,13 +41,13 @@ export const LeadershipTeamSection: React.FC = () => {
 
           {/* Card Details */}
           <div className="p-6 md:p-7">
-            <h3 className="text-[#0084CA] font-extrabold text-xl md:text-2xl tracking-wide uppercase mb-1">
+            <h3 className="text-[#0084CA] font-bold text-xl md:text-2xl tracking-wide uppercase mb-1">
               SIDDHARTHA POUDEL
             </h3>
             <h4 className="text-[#FFB800] font-bold text-base md:text-lg mb-3">
               Director
             </h4>
-            <p className="text-[#334155] text-sm leading-relaxed font-normal">
+            <p className="text-[#475569] text-sm leading-relaxed font-normal">
               Providing strategic direction and governance to support HIMA AUS Consultancy's mission of trusted education consulting.
             </p>
           </div>
@@ -61,10 +61,10 @@ export const LeadershipTeamSection: React.FC = () => {
             key={stat.id}
             className="bg-white rounded-2xl md:rounded-[20px] p-6 md:p-8 border border-gray-100/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] text-center flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
           >
-            <span className="text-[#0084CA] font-extrabold text-3xl md:text-4xl lg:text-[42px] tracking-tight leading-none mb-2">
+            <span className="text-[#0084CA] font-bold text-3xl md:text-4xl lg:text-[42px] tracking-tight leading-none mb-2">
               {stat.value}
             </span>
-            <span className="text-[#334155] font-semibold text-xs sm:text-sm md:text-base">
+            <span className="text-[#475569] font-medium text-xs sm:text-sm md:text-base">
               {stat.label}
             </span>
           </div>
