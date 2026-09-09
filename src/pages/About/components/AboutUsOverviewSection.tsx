@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import whoWeAreImg from "../../../assets/images/who-we-are-graduate.png";
 
 export const AboutUsOverviewSection: React.FC = () => {
@@ -38,12 +39,12 @@ export const AboutUsOverviewSection: React.FC = () => {
 
           {/* Action Button */}
           <div>
-            <button
-              type="button"
-              className="bg-[#0084CA] hover:bg-[#0073B2] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-102 cursor-pointer"
+            <Link
+              to="/about/who-we-are"
+              className="bg-[#0084CA] hover:bg-[#0073B2] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-102 cursor-pointer inline-flex items-center justify-center"
             >
               Learn More About Us
-            </button>
+            </Link>
           </div>
         </div>
       </div>

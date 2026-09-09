@@ -46,6 +46,8 @@ import WhyLearnMore from "../pages/Home/whySection/whyChooseExplore/pages/Whylea
 import CompanyProfilePage from "../pages/About/CompanyProfilePage.tsx";
 import DirectorMessagePage from "../pages/About/DirectorMessagePage.tsx";
 import AboutEventsPage from "../pages/About/AboutEventsPage.tsx";
+import WhoWeArePage from "../pages/About/WhoWeArePage.tsx";
+
 
 
 
@@ -198,7 +200,11 @@ const router = createBrowserRouter([
           },
           {
             path: "company-profile/who-are-we",
-            element: <CompanyProfilePage />,
+            element: <WhoWeArePage />,
+          },
+          {
+            path: "who-we-are",
+            element: <WhoWeArePage />,
           },
           {
             path: "director-message",
