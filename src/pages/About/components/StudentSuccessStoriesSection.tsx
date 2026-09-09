@@ -25,15 +25,7 @@ export const StudentSuccessStoriesSection: React.FC = () => {
             Over the years, we've helped thousands of students achieve their dreams of studying in Australia. Our comprehensive support system ensures that every student receives the guidance they need to succeed academically and personally in their new environment.
           </p>
 
-          {/* Learn More About Us Button */}
-          <div>
-            <button
-              type="button"
-              className="bg-[#0084CA] hover:bg-[#0073B2] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-102 cursor-pointer"
-            >
-              Learn More About Us
-            </button>
-          </div>
+
         </div>
 
         {/* Right Column: Image Card */}

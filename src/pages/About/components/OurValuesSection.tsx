@@ -36,15 +36,7 @@ export const OurValuesSection: React.FC = () => {
             Providing genuine and accurate advice, and guidance to our students lies in the heart of what we do. We share our own stories to inspire our students and strive to be an integral part of their journey to achieve their education and career goals. We are proud of our ethical standards and the reputation we have gained since our inception.
           </p>
 
-          {/* Learn More About Us Button */}
-          <div>
-            <button
-              type="button"
-              className="bg-[#0084CA] hover:bg-[#0073B2] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-102 cursor-pointer"
-            >
-              Learn More About Us
-            </button>
-          </div>
+
         </div>
       </div>
     </section>
