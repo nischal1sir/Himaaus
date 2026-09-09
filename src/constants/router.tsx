@@ -44,6 +44,8 @@ import WhyLearnMore from "../pages/Home/whySection/whyChooseExplore/pages/Whylea
 
 // About Us pages
 import CompanyProfilePage from "../pages/About/CompanyProfilePage.tsx";
+import DirectorMessagePage from "../pages/About/DirectorMessagePage.tsx";
+
 
 function EventDetailRoute({
   pageComponent: PageComponent,
@@ -198,7 +200,7 @@ const router = createBrowserRouter([
           },
           {
             path: "director-message",
-            element: <CompanyProfilePage />,
+            element: <DirectorMessagePage />,
           },
           {
             path: "partners",
