@@ -1,5 +1,5 @@
 import React from "react";
-import ourValuesImg from "../../../assets/images/our-values-student.png";
+import Company2 from "../../../assets/AboutUs/Company2.jpg";
 
 export const OurValuesSection: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ export const OurValuesSection: React.FC = () => {
         <div className="relative group">
           <div className="rounded-[28px] md:rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.07)] border border-gray-100 transition-all duration-300">
             <img
-              src={ourValuesImg}
+              src={Company2}
               alt="Graduate student celebrating - Our Values"
               className="w-full h-[320px] sm:h-[380px] md:h-[440px] object-cover object-center transition-transform duration-500 group-hover:scale-102"
             />

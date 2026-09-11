@@ -1,6 +1,6 @@
 import React from "react";
 import { statsData } from "../data/aboutPageData";
-import siddharthaImg from "../../../assets/images/siddhartha-poudel-director.png";
+import Director from "../../../assets/AboutUs/Director.jpg";
 
 export const LeadershipTeamSection: React.FC = () => {
   return (
@@ -33,7 +33,7 @@ export const LeadershipTeamSection: React.FC = () => {
           {/* Card Top Image */}
           <div className="w-full h-[320px] sm:h-[340px] overflow-hidden bg-gray-50">
             <img
-              src={siddharthaImg}
+              src={Director}
               alt="SIDDHARTHA POUDEL - Director"
               className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-103"
             />

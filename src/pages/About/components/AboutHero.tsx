@@ -18,7 +18,7 @@ export const AboutHero: React.FC = () => {
           to="/"
           className="mb-4 inline-flex w-fit items-center gap-1.5 text-base text-white/90 hover:text-white transition-colors cursor-pointer"
         >
-          ← Back
+          ← Back 
         </Link>
 
         {/* Hero Title */}

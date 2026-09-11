@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import whoWeAreImg from "../../../assets/images/who-we-are-graduate.png";
+import Company1 from "../../../assets/AboutUs/Company1.jpg";
 
 export const AboutUsOverviewSection: React.FC = () => {
   return (
@@ -10,8 +10,8 @@ export const AboutUsOverviewSection: React.FC = () => {
         <div className="relative group">
           <div className="rounded-[28px] md:rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.07)] border border-gray-100 transition-all duration-300">
             <img
-              src={whoWeAreImg}
-              alt="Graduate student - Who We Are"
+              src={Company1}
+              alt="Company Overview"
               className="w-full h-[340px] sm:h-[400px] md:h-[460px] object-cover object-center transition-transform duration-500 group-hover:scale-102"
             />
           </div>
