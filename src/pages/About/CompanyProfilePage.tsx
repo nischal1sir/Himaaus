@@ -13,8 +13,11 @@ export const CompanyProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">
       {/* 1. Hero Banner */}
-      <AboutHero />
-
+      <AboutHero
+        title="Learn more About Us"
+        subtitle="Our experienced team guides students in education consultancy, visa processing, and career planning to achieve their international study goals."
+        backTo="/"
+      />
       {/* 2. Our Guiding Principles Section */}
       <GuidingPrinciplesSection />
 

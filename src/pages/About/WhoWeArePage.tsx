@@ -8,44 +8,21 @@ import {
   GraduationCap,
   MapPin,
 } from "lucide-react";
-import heroBg from "../../assets/images/hero-about-bg.png";
 import whoWeAreImg from "../../assets/images/who-we-are-graduate.png";
 import CTASection from "../Home/whySection/whyChooseExplore/CTASection";
+import AboutHero from "./components/AboutHero";
 
 export const WhoWeArePage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">
-      {/* 1. Hero Banner Section (Matches Screenshot 1) */}
-      <section
-        className="relative min-h-[360px] sm:min-h-[400px] md:min-h-[440px] w-full bg-cover bg-center bg-no-repeat overflow-hidden"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-slate-900/70" />
-
-        {/* Hero Content Container */}
-        <div className="relative z-10 mx-auto flex min-h-[360px] sm:min-h-[400px] md:min-h-[440px] max-w-6xl flex-col justify-end px-4 sm:px-6 lg:px-8 pb-12 pt-28 sm:pt-32 text-white">
-          {/* Back Button */}
-          <button
-            onClick={() => navigate(-1)}
-            className="mb-3 inline-flex w-fit items-center gap-1.5 text-sm sm:text-base text-white/90 hover:text-white transition-colors cursor-pointer"
-          >
-            ← Back
-          </button>
-
-          {/* Hero Main Title */}
-          <h1 className="max-w-4xl text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold leading-tight text-white tracking-tight">
-            Who We Are?
-          </h1>
-
-          {/* Hero Subtitle */}
-          <p className="mt-3 max-w-3xl text-sm sm:text-base md:text-lg text-white/85 leading-relaxed font-normal">
-            Hima Aus Education Consultancy is education and visa consultancy firm dedicated to guiding international students and aspiring migrants towards their global academic and career aspirations.
-          </p>
-        </div>
-      </section>
+      {/* 1. Hero Banner Section */}
+      <AboutHero
+        title="Who We Are?"
+        subtitle="Hima Aus Education Consultancy is education and visa consultancy firm dedicated to guiding international students and aspiring migrants towards their global academic and career aspirations."
+        backTo="/about"
+      />
 
       {/* 2. Main Content Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-16">
