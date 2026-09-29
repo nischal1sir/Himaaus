@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Target,
   Users,
@@ -10,8 +10,32 @@ import {
 import siddharthaImg from "../../assets/AboutUs/Director.jpg";
 import CTASection from "../Home/whySection/whyChooseExplore/CTASection";
 import AboutHero from "./components/AboutHero";
+import { apiClient } from "../../services/apiClient";
 
 export const DirectorMessagePage: React.FC = () => {
+  const [directorMessage, setDirectorMessage] = useState<string | null>(null);
+  const [directorName, setDirectorName] = useState<string>("Siddhartha Poudel");
+  const [directorTitle, setDirectorTitle] = useState<string>("Director- Hima Aus Education Consultancy");
+
+  useEffect(() => {
+    async function loadDirectorMessage() {
+      try {
+        const data = await apiClient.get<any>('/director-message');
+        if (data) {
+          const item = Array.isArray(data) ? data[0] : data;
+          if (item) {
+            if (item.name) setDirectorName(item.name);
+            if (item.designation) setDirectorTitle(item.designation);
+            if (item.message) setDirectorMessage(item.message);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch director message:', err);
+      }
+    }
+    loadDirectorMessage();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">
       {/* 1. Hero Banner Section */}
@@ -62,11 +86,11 @@ export const DirectorMessagePage: React.FC = () => {
               {/* Glassmorphism Name Box */}
               <div className="absolute bottom-4 left-4 right-4 bg-white/25 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-5 text-white shadow-lg">
                 <h3 className="text-xl sm:text-2xl font-bold tracking-wide text-white leading-tight">
-                  Siddhartha Poudel
+                  {directorName}
                 </h3>
 
                 <p className="text-xs sm:text-sm font-medium text-white/90 mt-0.5">
-                  Director- Hima Aus Education Consultancy
+                  {directorTitle}
                 </p>
               </div>
             </div>

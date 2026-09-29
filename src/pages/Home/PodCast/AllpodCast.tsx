@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import SectionHeading from "../Components/SectionHeadingProps";
 import Card from "./Components/Card";
 
@@ -6,8 +6,65 @@ import third from "../../../assets/Podcast/third.jpg";
 import four from "../../../assets/Podcast/four.jpg";
 import austriaposs from "../../../assets/Podcast/austrailiaPoss.jpg";
 import RightPodcast from "../../../assets/Podcast/RightPodcast.jpg";
+import { apiClient } from "../../../services/apiClient";
+
+export interface PodcastEpisode {
+  id: string | number;
+  src: string;
+  title: string;
+  videoId?: string;
+}
+
+const DEFAULT_PODCASTS: PodcastEpisode[] = [
+  {
+    id: 1,
+    src: austriaposs,
+    title: "Study in Australia, Southern Cross University, Access 2026 and More..",
+    videoId: "2fo9FdN8fao",
+  },
+  {
+    id: 2,
+    src: RightPodcast,
+    title: "Hima Aus Education X Hult Prize IOE, Pulchowk Campus",
+    videoId: "AjKOW1ExvmQ",
+  },
+  {
+    id: 3,
+    src: third,
+    title: "Study in Australia exclusive, NAPS, Documentation and VISA !",
+    videoId: "dO16CevGqb4",
+  },
+  {
+    id: 4,
+    src: four,
+    title: "Get It Right about USA Application, Interview, Universities and Scholarships, life in USA and more",
+    videoId: "ya84Kn26iZM",
+  },
+];
 
 const AllpodCast = () => {
+  const [episodes, setEpisodes] = useState<PodcastEpisode[]>(DEFAULT_PODCASTS);
+
+  useEffect(() => {
+    async function loadPodcasts() {
+      try {
+        const data = await apiClient.get<any[]>('/podcasts');
+        if (Array.isArray(data) && data.length > 0) {
+          const list = data.map((item, idx) => ({
+            id: item._id || item.id || idx + 1,
+            src: item.image || item.coverImage || item.thumbnail || DEFAULT_PODCASTS[idx % DEFAULT_PODCASTS.length].src,
+            title: item.title || item.name || 'Podcast Episode',
+            videoId: item.videoId || item.youtubeId || item.videoUrl || '2fo9FdN8fao',
+          }));
+          setEpisodes(list);
+        }
+      } catch (err) {
+        console.error('Failed to load podcasts from API:', err);
+      }
+    }
+    loadPodcasts();
+  }, []);
+
   return (
     <section className="bg-gray-50 py-20 section-heading-override">
       <SectionHeading
@@ -25,29 +82,14 @@ const AllpodCast = () => {
         px-4 sm:px-6 lg:px-12 xl:px-20
       "
       >
-        <Card
-          src={austriaposs}
-          title="Study in Australia, Southern Cross University, Access 2026 and More.."
-          videoId="2fo9FdN8fao"
-        />
-
-        <Card
-          src={RightPodcast}
-          title="Hima Aus Education X Hult Prize IOE, Pulchowk Campus"
-          videoId="AjKOW1ExvmQ"
-        />
-
-        <Card
-          src={third}
-          title="Study in Australia exclusive, NAPS, Documentation and VISA !"
-          videoId="dO16CevGqb4"
-        />
-
-        <Card
-          src={four}
-          title="Get It Right about USA Application, Interview, Universities and Scholarships, life in USA and more"
-          videoId="ya84Kn26iZM"
-        />
+        {episodes.map((ep) => (
+          <Card
+            key={ep.id}
+            src={ep.src}
+            title={ep.title}
+            videoId={ep.videoId}
+          />
+        ))}
       </div>
     </section>
   );

@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { statsData } from "../data/aboutPageData";
 import Director from "../../../assets/AboutUs/Director.jpg";
+import { apiClient } from "../../../services/apiClient";
+
+export interface TeamMember {
+  id: string | number;
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+}
+
+const DEFAULT_MEMBERS: TeamMember[] = [
+  {
+    id: 1,
+    name: "SIDDHARTHA POUDEL",
+    role: "Director",
+    image: Director,
+    bio: "Providing strategic direction and governance to support HIMA AUS Consultancy's mission of trusted education consulting.",
+  },
+];
 
 export const LeadershipTeamSection: React.FC = () => {
+  const [teamList, setTeamList] = useState<TeamMember[]>(DEFAULT_MEMBERS);
+
+  useEffect(() => {
+    async function loadTeam() {
+      try {
+        const data = await apiClient.get<any[]>('/team');
+        if (Array.isArray(data) && data.length > 0) {
+          const list: TeamMember[] = data.map((item, idx) => ({
+            id: item._id || item.id || idx + 1,
+            name: item.name || 'Team Member',
+            role: item.role || item.designation || 'Counselor',
+            image: item.image || item.imageUrl || Director,
+            bio: item.bio || item.description || '',
+          }));
+          setTeamList(list);
+        }
+      } catch (err) {
+        console.error('Failed to load team from API:', err);
+      }
+    }
+    loadTeam();
+  }, []);
+
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 md:py-16">
       {/* Header */}
@@ -28,30 +70,31 @@ export const LeadershipTeamSection: React.FC = () => {
 
       {/* Leadership Team Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-14">
-        {/* Leadership Member Card - Siddhartha Poudel */}
-        <div className="bg-white rounded-[24px] border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-          {/* Card Top Image */}
-          <div className="w-full h-[320px] sm:h-[340px] overflow-hidden bg-gray-50">
-            <img
-              src={Director}
-              alt="SIDDHARTHA POUDEL - Director"
-              className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-103"
-            />
-          </div>
+        {teamList.map((member) => (
+          <div key={member.id} className="bg-white rounded-[24px] border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            {/* Card Top Image */}
+            <div className="w-full h-[320px] sm:h-[340px] overflow-hidden bg-gray-50">
+              <img
+                src={member.image}
+                alt={`${member.name} - ${member.role}`}
+                className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-103"
+              />
+            </div>
 
-          {/* Card Details */}
-          <div className="p-6 md:p-7">
-            <h3 className="text-[#0084CA] font-bold text-xl md:text-2xl tracking-wide uppercase mb-1">
-              SIDDHARTHA POUDEL
-            </h3>
-            <h4 className="text-[#FFB800] font-bold text-base md:text-lg mb-3">
-              Director
-            </h4>
-            <p className="text-[#475569] text-sm leading-relaxed font-normal">
-              Providing strategic direction and governance to support HIMA AUS Consultancy's mission of trusted education consulting.
-            </p>
+            {/* Card Details */}
+            <div className="p-6 md:p-7">
+              <h3 className="text-[#0084CA] font-bold text-xl md:text-2xl tracking-wide uppercase mb-1">
+                {member.name}
+              </h3>
+              <h4 className="text-[#FFB800] font-bold text-base md:text-lg mb-3">
+                {member.role}
+              </h4>
+              <p className="text-[#475569] text-sm leading-relaxed font-normal">
+                {member.bio}
+              </p>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* Stats Counter Cards Grid (As shown in Image 2) */}

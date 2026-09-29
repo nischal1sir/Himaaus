@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import SectionHeading from "../Components/SectionHeadingProps";
+import { apiClient } from "../../../services/apiClient";
 
-// All FAQ data as a simple array of categories, each with its own questions
-const categories = [
+const DEFAULT_CATEGORIES = [
   {
     name: "General",
     questions: [
@@ -42,11 +42,39 @@ const categories = [
 ];
 
 export default function FAQSection() {
-  // Which category name is currently selected
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
   const [activeCategoryName, setActiveCategoryName] = useState("General");
-
-  // Which question numbers (index) are currently open
   const [openQuestions, setOpenQuestions] = useState<number[]>([]);
+
+  useEffect(() => {
+    async function loadFaqs() {
+      try {
+        const data = await apiClient.get<any[]>('/faqs');
+        if (Array.isArray(data) && data.length > 0) {
+          const grouped: Record<string, { question: string; answer: string }[]> = {};
+          data.forEach((item) => {
+            const cat = item.category || 'General';
+            if (!grouped[cat]) grouped[cat] = [];
+            grouped[cat].push({
+              question: item.question || item.title || 'FAQ Question',
+              answer: item.answer || item.content || '',
+            });
+          });
+          const catList = Object.keys(grouped).map((catName) => ({
+            name: catName,
+            questions: grouped[catName],
+          }));
+          setCategories(catList);
+          if (catList.length > 0) {
+            setActiveCategoryName(catList[0].name);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load FAQs from API:', err);
+      }
+    }
+    loadFaqs();
+  }, []);
 
   // Find the full category object that matches the selected name
   const activeCategory = categories.find((c) => c.name === activeCategoryName);

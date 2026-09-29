@@ -1,12 +1,42 @@
-import { useState } from 'react';
-import { blogs } from '../blogsData';
+import { useState, useEffect } from 'react';
+import { blogs as initialBlogs, type BlogPost } from '../blogsData';
 import { BlogList } from './Bloglist';
+import { apiClient } from '../../../services/apiClient';
+
+function normalizeBlog(item: any, idx: number): BlogPost {
+  return {
+    id: typeof item.id === 'number' ? item.id : idx + 1,
+    slug: item.slug || `blog-${item.id || idx}`,
+    title: item.title || 'Untitled Post',
+    excerpt: item.excerpt || item.summary || item.content?.slice(0, 150) || '',
+    date: item.date || item.createdAt?.slice(0, 10) || new Date().toISOString().slice(0, 10),
+    author: item.author || item.authorName || 'Himaaus',
+    readTime: item.readTime || item.readingTime || '3 min read',
+    category: item.category || 'General',
+    image: item.image || item.imageUrl || item.coverImage || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80',
+  };
+}
 
 export const Body1 = () => {
+  const [blogList, setBlogList] = useState<BlogPost[]>(initialBlogs);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const filteredBlogs = blogs.filter(blog => {
+  useEffect(() => {
+    async function loadBlogs() {
+      try {
+        const data = await apiClient.get<any[]>('/blogs');
+        if (Array.isArray(data) && data.length > 0) {
+          setBlogList(data.map((item, idx) => normalizeBlog(item, idx)));
+        }
+      } catch (err) {
+        console.error('Failed to fetch blogs from API:', err);
+      }
+    }
+    loadBlogs();
+  }, []);
+
+  const filteredBlogs = blogList.filter(blog => {
     const matchesSearch =
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());

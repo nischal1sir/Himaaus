@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Calendar, ArrowLeft, Clock, Tag, ArrowUpRight } from "lucide-react";
 import EventUsAdmissionCrop from "../../assets/EventUsAdmissionCrop.png";
@@ -6,6 +6,7 @@ import BookerClub from "../../assets/BookerClub.png";
 import ToranlhaRunningCupCrop from "../../assets/ToranlhaRunningCupCrop.png";
 import CTASection from "../Home/whySection/whyChooseExplore/CTASection";
 import AboutHero from "./components/AboutHero";
+import { apiClient } from "../../services/apiClient";
 
 export interface EventItem {
   id: number | string;
@@ -58,23 +59,52 @@ export const INITIAL_EVENTS: EventItem[] = [
   },
 ];
 
+function normalizeEvent(item: any, idx: number): EventItem {
+  return {
+    id: item._id || item.id || idx + 1,
+    image: item.image || item.imageUrl || EventUsAdmissionCrop,
+    title: item.title || item.name || 'Event',
+    description: item.description || item.summary || '',
+    date: item.date || item.eventDate || 'Dec 2026',
+    time: item.time || item.eventTime || '10:00 AM',
+    tags: Array.isArray(item.tags) ? item.tags : [item.category || 'General'],
+    status: item.status === 'Upcoming' || item.isUpcoming ? 'Upcoming' : 'Past',
+    href: item.href || `/explore-event/${item.slug || item.id || idx}`,
+  };
+}
+
 export const AboutEventsPage: React.FC = () => {
   const navigate = useNavigate();
   const categories = ["All", "General"];
   const timeOptions = ["Upcoming", "Past", "All Events"];
 
+  const [events, setEvents] = useState<EventItem[]>(INITIAL_EVENTS);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [timeFilter, setTimeFilter] = useState("Upcoming");
+  const [timeFilter, setTimeFilter] = useState("All Events");
+
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const data = await apiClient.get<any[]>('/events');
+        if (Array.isArray(data) && data.length > 0) {
+          setEvents(data.map((item, idx) => normalizeEvent(item, idx)));
+        }
+      } catch (err) {
+        console.error('Failed to load events from API:', err);
+      }
+    }
+    loadEvents();
+  }, []);
 
   const filteredEvents = useMemo(() => {
-    return INITIAL_EVENTS.filter((e) => {
+    return events.filter((e) => {
       const categoryMatch =
         activeCategory === "All" || e.tags.includes(activeCategory);
       const timeMatch =
         timeFilter === "All Events" || e.status === timeFilter;
       return categoryMatch && timeMatch;
     });
-  }, [activeCategory, timeFilter]);
+  }, [events, activeCategory, timeFilter]);
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">

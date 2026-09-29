@@ -27,13 +27,12 @@ import VisaApplication from "../pages/Home/whySection/Components/ourServices/Vis
 import BlogMain from "../pages/Blog/BlogMain.tsx"
 import Blog1 from "../pages/Blog/blog1.tsx";
 import Blog2 from "../pages/Blog/blog2.tsx";
-//gallery
+import GalleryPage from "../pages/Gallery/GalleryPage.tsx";
+import ContactUsPage from "../pages/contactUs/ContactUsPage.tsx";
 
 //our services
 import ServiceMain from "../pages/Services/ServceMainPage.tsx";
 import Courses from "../pages/Services/EnglishTesting/EnglishTestMain.tsx";
-
-//contactus
 
 //find-us
 import FindUsPage from "../pages/find-us/find-us.tsx";
@@ -47,9 +46,6 @@ import CompanyProfilePage from "../pages/About/CompanyProfilePage.tsx";
 import DirectorMessagePage from "../pages/About/DirectorMessagePage.tsx";
 import AboutEventsPage from "../pages/About/AboutEventsPage.tsx";
 import WhoWeArePage from "../pages/About/WhoWeArePage.tsx";
-
-
-
 
 function EventDetailRoute({
   pageComponent: PageComponent,
@@ -278,7 +274,7 @@ const router = createBrowserRouter([
       },
       {
         path: "gallery",
-        element: "",
+        element: <GalleryPage />,
       },
       {
         path: "blog&news",
@@ -299,7 +295,7 @@ const router = createBrowserRouter([
       },
       {
         path: "contact-us",
-        element: "",
+        element: <ContactUsPage />,
       },
     ],
   },

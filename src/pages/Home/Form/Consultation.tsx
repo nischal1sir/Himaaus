@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiClient } from "../../../services/apiClient";
 import {
   User,
   Phone,
@@ -125,7 +126,7 @@ export default function ConsultationForm() {
     setErrors({ ...errors, [key]: "" });
   };
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     const err: Record<string, string> = {};
@@ -154,8 +155,25 @@ export default function ConsultationForm() {
     setErrors(err);
 
     if (Object.keys(err).length === 0) {
+      try {
+        await apiClient.post('/appointments', {
+          name: `${v.firstName.trim()} ${v.lastName.trim()}`,
+          email: v.email,
+          phone: v.phone,
+          program: v.programme,
+          degree: v.degree,
+          destination: v.destination,
+          testType: v.testPrep,
+          testScore: v.score,
+          additionalMessage: v.message,
+          status: 'Pending',
+        });
+      } catch (apiErr) {
+        console.error('Failed to post appointment to API:', apiErr);
+      }
       setToast(true);
       setTimeout(() => setToast(false), 3000);
+      setV(initial);
     }
   }
 

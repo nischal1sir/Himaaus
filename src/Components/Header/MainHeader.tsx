@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
+import { FaChevronDown, FaBars, FaTimes, FaBell } from "react-icons/fa";
 import { aboutLinks } from "./Components/DropdownData/dropDownData";
 import { ServicesDropDown } from "./Components/ServicesDropDown/ServicesDropDown";
+import { apiClient } from "../../services/apiClient";
+
+export interface NoticeItem {
+  id: string | number;
+  title: string;
+  message: string;
+  isImportant?: boolean;
+}
 
 const MainHeader = () => {
   const [hideNav, setHideNav] = useState(false);
@@ -12,6 +20,30 @@ const MainHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
+  // Notices state
+  const [notices, setNotices] = useState<NoticeItem[]>([]);
+
+  useEffect(() => {
+    async function loadNotices() {
+      try {
+        const data = await apiClient.get<any[]>('/notices');
+        if (Array.isArray(data) && data.length > 0) {
+          setNotices(
+            data.map((n, idx) => ({
+              id: n._id || n.id || idx,
+              title: n.title || 'Announcement',
+              message: n.content || n.message || n.description || '',
+              isImportant: n.isImportant || n.priority === 'High',
+            }))
+          );
+        }
+      } catch (err) {
+        console.error('Failed to load notices:', err);
+      }
+    }
+    loadNotices();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,11 +75,20 @@ const MainHeader = () => {
 
   return (
     <div>
+      {/* Dynamic Announcement Banner */}
+      {notices.length > 0 && (
+        <div className="fixed top-0 left-0 right-0 z-[102] bg-[#0084CA] text-white text-xs sm:text-sm font-medium py-1.5 px-4 text-center flex items-center justify-center gap-2 shadow-sm">
+          <FaBell className="text-yellow-300 animate-bounce shrink-0" />
+          <span className="font-bold">{notices[0].title}:</span>
+          <span className="truncate max-w-xl">{notices[0].message}</span>
+        </div>
+      )}
+
       <nav
-        className={`fixed top-6 left-1/2 z-[101] h-13 w-[min(94%,900px)]
+        className={`fixed ${notices.length > 0 ? "top-10" : "top-6"} left-1/2 z-[101] h-13 w-[min(94%,900px)]
           -translate-x-1/2 rounded-full border border-white
            bg-black/23 backdrop-blur-lg shadow-lg
-           transition-transform duration-1000 ease-in-out
+           transition-all duration-500 ease-in-out
         ${hideNav ? "-translate-y-[150%]" : "translate-y-0"}`}
       >
         {/*  MOBILE / TABLET TOP BAR (sm, md)  */}

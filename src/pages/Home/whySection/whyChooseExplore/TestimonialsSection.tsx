@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import testimonials from './data/testimonials.ts';
+import initialTestimonials, { type Testimonial } from './data/testimonials.ts';
 import TestimonialCard from './TestimonialCard.tsx';
+import { apiClient } from '../../../../services/apiClient';
 
-const TOTAL = testimonials.length;
-
-/** Tracks how many cards are visible at once, matching the sm/lg breakpoints
- *  used elsewhere on the site, so the slide distance always lines up with
- *  the actual card width on screen. */
 function useVisibleCount() {
   const [count, setCount] = useState(3);
 
@@ -27,12 +23,35 @@ function useVisibleCount() {
 }
 
 export default function TestimonialsSection() {
+  const [testimonialList, setTestimonialList] = useState<Testimonial[]>(initialTestimonials);
+
+  useEffect(() => {
+    async function loadTestimonials() {
+      try {
+        const data = await apiClient.get<any[]>('/testimonials');
+        if (Array.isArray(data) && data.length > 0) {
+          const list: Testimonial[] = data.map((item) => ({
+            quote: item.quote || item.content || item.review || '',
+            name: item.name || item.studentName || 'Student',
+            role: item.role || item.title || 'Student',
+            course: item.course || item.program || item.degree || 'Study Abroad',
+            university: item.university || item.institution || item.country || 'Australia',
+            avatar: item.avatar || item.image || item.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
+          }));
+          setTestimonialList(list);
+        }
+      } catch (err) {
+        console.error('Failed to load testimonials from API:', err);
+      }
+    }
+    loadTestimonials();
+  }, []);
+
+  const totalCount = testimonialList.length;
   const perView = useVisibleCount();
-  const maxIndex = Math.max(0, TOTAL - perView);
+  const maxIndex = Math.max(0, totalCount - perView);
   const [index, setIndex] = useState(0);
 
-  // Keep the current position valid if the viewport is resized across a
-  // breakpoint (e.g. desktop showing 3 cards, index 5, resized to mobile).
   useEffect(() => {
     setIndex((i) => Math.min(i, maxIndex));
   }, [maxIndex]);
@@ -71,8 +90,8 @@ export default function TestimonialsSection() {
               className="flex transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={{ transform: `translateX(-${index * step}%)` }}
             >
-              {testimonials.map((t) => (
-                <div key={t.name} className="shrink-0 px-2.5" style={{ flex: `0 0 ${step}%` }}>
+              {testimonialList.map((t, i) => (
+                <div key={t.name + i} className="shrink-0 px-2.5" style={{ flex: `0 0 ${step}%` }}>
                   <TestimonialCard {...t} />
                 </div>
               ))}
