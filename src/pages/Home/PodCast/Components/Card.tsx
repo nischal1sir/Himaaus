@@ -4,7 +4,7 @@ import { useState } from "react";
 type cardProps = {
   src: string;
   title: string;
-  videoId: string;
+  videoId?: string;
 };
 
 const Card = ({ src, title, videoId }: cardProps) => {
@@ -118,7 +118,7 @@ const Card = ({ src, title, videoId }: cardProps) => {
 
               <iframe
                 className="w-full h-full rounded-lg"
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${videoId || '2fo9FdN8fao'}?autoplay=1`}
                 allow="autoplay"
                 allowFullScreen
               />
